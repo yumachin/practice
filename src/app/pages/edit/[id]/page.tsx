@@ -59,7 +59,7 @@ export default function EditComment({ params }: { params: Promise<{ id : number 
         contentRef.current.value = data.content;
       }
     }).catch(( error ) => {
-      console.error("エラーが発生しました。")
+      console.error("エラーが発生しました。", error)
     })
   }, [])
 
