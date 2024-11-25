@@ -6,7 +6,10 @@ const getAllComments = async ( host: string ) => {
   const res = await fetch(`https://${host}/api/comment/`, {
     cache: "no-store"
   });
+  console.log("res", res);
   const data = await res.json();
+  console.log("data", data);
+  console.log("data.comments", data.comments);
   return data.comments;
 }
 
@@ -14,7 +17,7 @@ export default async function Home() {
   const header = await headers();
   const host = header.get("host");
   const comments = await getAllComments(host!);
-  console.log(comments);
+  console.log("commentsは", comments);
   
   return (
     <main className="w-full h-full">
