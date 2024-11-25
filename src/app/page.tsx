@@ -1,9 +1,10 @@
 import { CommentType } from "@/types/types";
 import Link from "next/link";
 import { headers } from "next/headers";
+import { config } from "@/lib/config";
 
 const getAllComments = async ( host: string ) => {
-  const res = await fetch(`http://${host}/api/comment/`, {
+  const res = await fetch(`${config.apiPrefix}${host}/api/comment/`, {
     cache: "no-store"
   });
   const data = await res.json();
