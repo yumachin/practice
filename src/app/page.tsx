@@ -6,10 +6,10 @@ const getAllComments = async ( host: string ) => {
   const res = await fetch(`https://${host}/api/comment/`, {
     cache: "no-store"
   });
-  console.log("res", res);
+  console.log("resは", res);
   const data = await res.json();
-  console.log("data", data);
-  console.log("data.comments", data.comments);
+  console.log("dataは", data);
+  console.log("data.commentsは", data.comments);
   return data.comments;
 }
 
