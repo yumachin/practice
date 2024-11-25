@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useRef } from "react";
+import toast, { Toaster } from "react-hot-toast";
 
 const postComment = async ( title: string | undefined, content: string | undefined) => {
   const res = await fetch(`/api/comment/`, {
@@ -22,12 +23,16 @@ export default function PostComment() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    toast.loading("Loading...", {id: '1'});
     await postComment(titleRef.current?.value, contentRef.current?.value);
+    toast.success("Success!", {id: '1'});
     router.push("/");
+    router.refresh();
   };
 
   return (
     <>
+      <Toaster />
       <div className="w-full m-auto flex my-4">
         <div className="flex flex-col justify-center items-center m-auto">
           <p className="text-2xl text-slate-200 font-bold p-3">ブログ新規作成 🚀</p>

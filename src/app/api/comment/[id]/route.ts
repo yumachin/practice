@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 export const GET = async ( req: Request ) => {
   try {
     const id: number = parseInt(req.url.split("comment/")[1]);
-    const comment = await prisma.comment.findMany({ where: { id } });
+    const comment = await prisma.comment.findFirst({ where: { id } });
     return NextResponse.json({ message: "Success", comment }, { status: 200 });
   } catch( error ) {
     return NextResponse.json({ message: "failed", error }, { status: 500 });

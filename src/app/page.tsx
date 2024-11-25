@@ -1,8 +1,9 @@
 import { CommentType } from "@/types/types";
 import Link from "next/link";
+import { headers } from "next/headers";
 
-const getAllComments = async () => {
-  const res = await fetch(`http://localhost:3000/api/comment/`, {
+const getAllComments = async ( host: string ) => {
+  const res = await fetch(`http://${host}/api/comment/`, {
     cache: "no-store"
   });
   const data = await res.json();
@@ -10,7 +11,9 @@ const getAllComments = async () => {
 }
 
 export default async function Home() {
-  const comments = await getAllComments();
+  const header = await headers();
+  const host = header.get("host");
+  const comments = await getAllComments(host!);
   console.log(comments);
   
   return (

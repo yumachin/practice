@@ -1,7 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { use, useRef } from "react";
+import { use, useEffect, useRef } from "react";
+import toast, { Toaster } from "react-hot-toast";
 
 const editComment = async ( title: string | undefined, content: string | undefined, id: number ) => {
   const res = await fetch(`/api/comment/${id}`, {
@@ -21,28 +22,50 @@ const deleteComment = async ( id: number ) => {
   return await res.json();
 }
 
+const getTitleAndContent = async ( id: number ) => {
+  const res = await fetch(`/api/comment/${id}`);
+  const data = await res.json();
+  return data.comment;
+}
+
 export default function EditComment({ params }: { params: Promise<{ id : number }> }) {
   const router = useRouter();
-  const titleRef = useRef<HTMLInputElement>(null);
-  const contentRef = useRef<HTMLTextAreaElement>(null);
+  const titleRef = useRef<HTMLInputElement | null>(null);
+  const contentRef = useRef<HTMLTextAreaElement | null>(null);
   const { id } = use(params);
 
   const handleEdit = async ( e: React.FormEvent ) => {
     e.preventDefault();
+    toast.loading("Loading...", {id: '1'});
     await editComment(titleRef.current?.value, contentRef.current?.value, id);
+    toast.success("Success!", {id: '1'});
     router.push("/");
     router.refresh();
   }
 
   const handleDelete = async ( e: React.FormEvent ) => {
     e.preventDefault();
+    toast.loading("Loading...", {id: '1'});
     await deleteComment( id );
+    toast.success("Success!", {id: '1'});
     router.push("/");
     router.refresh();
   }
 
+  useEffect(() => {
+    getTitleAndContent( id ).then(( data ) => {
+      if ( titleRef.current && contentRef.current ) {
+        titleRef.current.value = data.title;
+        contentRef.current.value = data.content;
+      }
+    }).catch(( error ) => {
+      console.error("エラーが発生しました。")
+    })
+  }, [])
+
   return (
     <>
+      <Toaster />
       <div className="w-full m-auto flex my-4">
         <div className="flex flex-col justify-center items-center m-auto">
           <p className="text-2xl text-slate-200 font-bold p-3">ブログの編集 🚀</p>
