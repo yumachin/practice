@@ -5,6 +5,8 @@ export const GET = async () => {
   console.log("アクセスされました！");
   try {
     console.log("tryを通っているよ")
+    console.log("prismaは", prisma);
+    console.log("prisma.commentは", prisma.comment);
     const comments = await prisma.comment.findMany();
     console.log("route.tsのcommentsは", comments)
     return NextResponse.json({ message: "Success", comments }, { status: 200 });
