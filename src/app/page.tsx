@@ -4,7 +4,8 @@ import { headers } from "next/headers";
 import { config } from "@/lib/config";
 
 const getAllComments = async ( host: string ) => {
-  console.log("config.apiPrefixは", config.apiPrefix)
+  console.error("config.apiPrefixは", config.apiPrefix)
+  console.error("hostは", host)
   const res = await fetch(`${config.apiPrefix}${host}/api/comment/`, {
     cache: "no-store"
   });
