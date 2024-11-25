@@ -1,11 +1,8 @@
 import { CommentType } from "@/types/types";
 import Link from "next/link";
 import { headers } from "next/headers";
-import { config } from "@/lib/config";
 
 const getAllComments = async ( host: string ) => {
-  console.error("config.apiPrefixは", config.apiPrefix)
-  console.error("hostは", host)
   const res = await fetch(`https://${host}/api/comment/`, {
     cache: "no-store"
   });
