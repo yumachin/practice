@@ -6,7 +6,7 @@ import { config } from "@/lib/config";
 const getAllComments = async ( host: string ) => {
   console.error("config.apiPrefixは", config.apiPrefix)
   console.error("hostは", host)
-  const res = await fetch(`${config.apiPrefix}${host}/api/comment/`, {
+  const res = await fetch(`https://${host}/api/comment/`, {
     cache: "no-store"
   });
   const data = await res.json();
