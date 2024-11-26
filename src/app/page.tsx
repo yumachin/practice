@@ -1,23 +1,22 @@
 import { CommentType } from "@/types/types";
 import Link from "next/link";
-import { headers } from "next/headers";
+//import { headers } from "next/headers";
 
-const getAllComments = async ( host: string ) => {
-  const res = await fetch(`https://${host}/api/comment/`, {
+const getAllComments = async () => {
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+  const res = await fetch(`${API_URL}/api/comment/`, {
     cache: "no-store"
   });
-  console.log("resは", res);
   const data = await res.json();
-  console.log("dataは", data);
-  console.log("data.commentsは", data.comments);
+  console.log("resは", data);
   return data.comments;
 }
 
 export default async function Home() {
-  const header = await headers();
-  const host = header.get("host");
-  const comments = await getAllComments(host!);
-  console.log("commentsは", comments);
+  // const header = await headers();
+  // const host = header.get("host");
+  const comments = await getAllComments();
   
   return (
     <main className="w-full h-full">

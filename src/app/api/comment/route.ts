@@ -2,14 +2,10 @@ import prisma from "@/lib/prismaClient";
 import { NextResponse } from "next/server";
 
 export const GET = async () => {
-  console.log("アクセスされました！");
   try {
-    console.log("tryを通っているよ")
     const comments = await prisma.comment.findMany();
-    console.log("route.tsのcommentsは", comments)
     return NextResponse.json({ message: "Success", comments }, { status: 200 });
   } catch( error ) {
-    console.error("エアーを通っているよ")
     return NextResponse.json({ message: "failed", error }, { status: 500 });
   } finally {
     await prisma.$disconnect();
